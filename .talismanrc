@@ -1,0 +1,8 @@
+fileignoreconfig:
+- filename: src/services/markdownHtmlGenerator.ts
+  checksum: 9f4081be4cd8e04b8aa62369b37d3f7c64dd59eec881c2d6f5ffdb96a3533d20
+- filename: src/services/plainTextHtmlGenerator.ts
+  checksum: 651d4b9dfb35ccc873627fd2f182a7ffd486116f8901e0bcd5b4f1c665f1ffed
+- filename: package-lock.json
+  checksum: 584a819e6349656fe6cb0235a5b840823139d7c4c101f7df9da5b02127144310
+version: ""
