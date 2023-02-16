@@ -9,6 +9,7 @@ import { CodeLabConfig } from './models/config';
 import { CodeLabWebViewPanel } from './services/codeLabWebViewPanel';
 import { Helper } from './services/helper';
 import { debounceTime, Subject, Subscription } from 'rxjs';
+import { CodeLabEditorProvider } from './codeLabEditor';
 
 const changeTextSubject = new Subject<vscode.TextDocumentChangeEvent>();
 const subscription = new Subscription();
@@ -31,7 +32,10 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand(COMMAND_EXECUTE_INTERRUPT, onExecuteInterrupt));
   context.subscriptions.push(vscode.commands.registerCommand(COMMAND_OPEN, onOpen));
   context.subscriptions.push(vscode.commands.registerCommand(COMMAND_PREVIEW, (_) => onPreview(context)));
+
   subscription.add(changeTextSubject.pipe(debounceTime(300)).subscribe((event) => onDidChangeTextDocument(event, context)));
+
+  CodeLabEditorProvider.register(context);
 
   config = CodeLabConfig.getCurrentConfig();
 }

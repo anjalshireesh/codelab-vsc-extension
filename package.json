@@ -3,7 +3,7 @@
   "displayName": "CodeLab",
   "description": "A VSCode extension to help aid in training and lab exercises based on prebuilt environments",
   "publisher": "abenginerd",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.55.0"
   },
@@ -83,7 +83,19 @@
           "group": "navigation"
         }
       ]
-    }
+    },
+    "customEditors": [
+      {
+        "viewType": "codelab.editor",
+        "displayName": "CodeLab",
+        "selector": [
+          {
+            "filenamePattern": "*.mdtl"
+          }
+        ],
+        "priority": "default"
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
