@@ -32,10 +32,9 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand(COMMAND_EXECUTE_INTERRUPT, onExecuteInterrupt));
   context.subscriptions.push(vscode.commands.registerCommand(COMMAND_OPEN, onOpen));
   context.subscriptions.push(vscode.commands.registerCommand(COMMAND_PREVIEW, (_) => onPreview(context)));
+  context.subscriptions.push(CodeLabEditorProvider.register(context));
 
   subscription.add(changeTextSubject.pipe(debounceTime(300)).subscribe((event) => onDidChangeTextDocument(event, context)));
-
-  CodeLabEditorProvider.register(context);
 
   config = CodeLabConfig.getCurrentConfig();
 }
