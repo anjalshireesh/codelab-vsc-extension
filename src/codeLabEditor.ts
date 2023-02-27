@@ -7,6 +7,7 @@ export class CodeLabEditorProvider implements vscode.CustomTextEditorProvider {
   constructor(private readonly context: vscode.ExtensionContext) {}
 
   private _htmlGenerator: IHtmlGenerator = new MarkdownHtmlGenerator();
+  static currentFile: string;
   private static readonly viewType = "codelab.editor";
 
   /**
@@ -17,6 +18,7 @@ export class CodeLabEditorProvider implements vscode.CustomTextEditorProvider {
     webviewPanel: vscode.WebviewPanel,
     _token: vscode.CancellationToken
   ): Promise<void> {
+    CodeLabEditorProvider.currentFile = document.uri.fsPath;
     // Setup initial content for the webview
     webviewPanel.webview.options = {
       enableScripts: true,
@@ -50,6 +52,13 @@ export class CodeLabEditorProvider implements vscode.CustomTextEditorProvider {
         }
       }
     );
+
+    // update currently open file whenever focus changes from one editor to another
+    webviewPanel.onDidChangeViewState((e) => {
+      if (e.webviewPanel.active) {
+        CodeLabEditorProvider.currentFile = document.uri.fsPath;
+      }
+    });
 
     // Make sure we get rid of the listener when our editor is closed.
     webviewPanel.onDidDispose(() => {
